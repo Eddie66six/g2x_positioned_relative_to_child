@@ -1,14 +1,35 @@
 # g2x_positioned_relative_to_child
-
-A new Flutter package project.
+creates an overlay with position relative to the child
 
 ## Getting Started
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+import 'package:g2x_positioned_relative_to_child/g2x_positioned_relative_to_child.dart';
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+var g2xPositionedRelative = G2xPositionedRelativeToChild();
+var globalKey = GlobalKey();
+var opened = false;
+
+ElevatedButton(
+  key: globalKey,
+  child: Text("Aqui"),
+  onPressed: (){
+    if(opened){
+      g2xPositionedRelative.hide();
+    }
+    else{
+      g2xPositionedRelative.show(
+        horizontalAxis: G2xHorizontalPositionAxis.center,
+        context: context, 
+        parentKey: globalKey,
+        offSet: Offset(-100, 0),
+        child: Container(
+          height: 50,
+          width: 200,
+          color: Colors.red,
+          child: Center(child: Text("Child")),
+        )
+      );
+    }
+    opened = !opened;
+  },
+)
