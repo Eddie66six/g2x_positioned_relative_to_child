@@ -1,7 +1,8 @@
 name: g2x_positioned_relative_to_child
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+homepage: https://github.com/Eddie66six
+repository: https://github.com/Eddie66six/g2x_positioned_relative_to_child
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
