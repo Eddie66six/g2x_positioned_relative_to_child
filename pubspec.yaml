@@ -1,6 +1,6 @@
 name: g2x_positioned_relative_to_child
 description: Creates an overlay with position relative to the child.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/Eddie66six
 repository: https://github.com/Eddie66six/g2x_positioned_relative_to_child
 
