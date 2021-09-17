@@ -15,6 +15,10 @@ enum G2xVerticalPositionAxis {
 
 class G2xPositionedRelativeToChild {
   OverlayEntry? _overlayEntry;
+  final Function? callbackOnHide;
+  final bool? hasBackDropBackground;
+
+  G2xPositionedRelativeToChild({this.callbackOnHide, this.hasBackDropBackground = false});
 
   show({
     required BuildContext context, required GlobalKey parentKey, required Widget child,
@@ -25,8 +29,35 @@ class G2xPositionedRelativeToChild {
     _overlayEntry = _createOverlayEntry(parentKey, child, offSet, horizontalAxis, verticalAxis);
     Overlay.of(context)!.insert(_overlayEntry!);
   }
-  hide(){
+
+  hide() {
     _overlayEntry?.remove();
+    _overlayEntry = null;
+
+    callbackOnHide?.call();
+  }
+
+  _backDrop(BuildContext context, Widget child) {
+    return 
+      GestureDetector(
+        onTap: () {
+          hide();
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.08)
+          ),
+          child: Stack(
+            children: [
+              SizedBox(),
+
+              child
+            ],
+          )
+        ),
+      );
   }
 
   OverlayEntry _createOverlayEntry(
@@ -55,16 +86,20 @@ class G2xPositionedRelativeToChild {
       left = childOffset.dx + childSize.width/2;
     }
 
-    return OverlayEntry(
-      builder: (context) => Positioned(
+    var innerChild = 
+      Positioned(
         left: left + offSet.dx,
         top: top + offSet.dy,
-        //width: childSize.width,
         child: Material(
           elevation: 4.0,
           child: child,
         ),
-      )
+      );
+
+    return OverlayEntry(
+      builder: (context) {
+        return hasBackDropBackground! ? _backDrop(context, innerChild) : innerChild;
+      }
     );
   }
 }

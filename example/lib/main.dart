@@ -24,44 +24,111 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var g2xPositionedRelative = G2xPositionedRelativeToChild();
-  var globalKey = GlobalKey();
+  late G2xPositionedRelativeToChild g2xPositionedRelativeWithBackdrop;
+  var g2xPositionedRelativeWithoutBackdrop = G2xPositionedRelativeToChild();
+
+  var globalKeyWithBackdrop = GlobalKey();
+  var globalKeyWithoutBackdrop = GlobalKey();
+
   var opened = false;
+
+  _fechar() {
+    opened = !opened;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    g2xPositionedRelativeWithBackdrop = G2xPositionedRelativeToChild(
+      callbackOnHide: _fechar,
+      hasBackDropBackground: true
+    );
+    
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              key: globalKey,
-              child: Text("Tap"),
-              onPressed: (){
-                if(opened){
-                  g2xPositionedRelative.hide();
-                }
-                else{
-                  g2xPositionedRelative.show(
+      body: SafeArea(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              Text("$opened"),
+
+              ElevatedButton(
+                key: globalKeyWithBackdrop,
+                child: const Text("With Backdrop"),
+                onPressed: () {
+                  g2xPositionedRelativeWithBackdrop.show(
                     horizontalAxis: G2xHorizontalPositionAxis.center,
                     context: context, 
-                    parentKey: globalKey,
-                    offSet: Offset(-100, 0),
+                    parentKey: globalKeyWithBackdrop,
+                    offSet: const Offset(-100, 0),
                     child: Container(
                       height: 50,
                       width: 200,
                       color: Colors.red,
-                      child: Center(child: Text("Child")),
+                      child: 
+                        const 
+                          Center(
+                            child: 
+                              Text(
+                                "Child"
+                              )
+                          ),
                     )
                   );
-                }
-                opened = !opened;
-              },
-            )
-          ],
+
+                  opened = true;
+
+                  setState(() { });
+                },
+              ),
+
+              ElevatedButton(
+                key: globalKeyWithoutBackdrop,
+                child: const Text("Without Backdrop"),
+                onPressed: () {
+                  if(opened) {
+                    g2xPositionedRelativeWithoutBackdrop.hide();
+                    opened = false;
+                    setState(() { });
+                  }
+                  else {
+                    g2xPositionedRelativeWithoutBackdrop.show(
+                      horizontalAxis: G2xHorizontalPositionAxis.center,
+                      context: context, 
+                      parentKey: globalKeyWithoutBackdrop,
+                      offSet: const Offset(-100, 0),
+                      child: Container(
+                        height: 50,
+                        width: 200,
+                        color: Colors.red,
+                        child: 
+                          const 
+                            Center(
+                              child: 
+                                Text(
+                                  "Child"
+                                )
+                            ),
+                      )
+                    );
+
+                    opened = true;
+
+                    setState(() { });
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
+      
     );
   }
 }
