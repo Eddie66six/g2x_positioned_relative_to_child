@@ -7,6 +7,7 @@ enum G2xHorizontalPositionAxis {
   left,
   center
 }
+
 enum G2xVerticalPositionAxis {
   top,
   bottom,
@@ -17,6 +18,7 @@ class G2xPositionedRelativeToChild {
   OverlayEntry? _overlayEntry;
   final Function? callbackOnHide;
   final bool? hasBackDropBackground;
+  final double backdropTransparency = 0.08;
 
   G2xPositionedRelativeToChild({this.callbackOnHide, this.hasBackDropBackground = false});
 
@@ -33,7 +35,6 @@ class G2xPositionedRelativeToChild {
   hide() {
     _overlayEntry?.remove();
     _overlayEntry = null;
-
     callbackOnHide?.call();
   }
 
@@ -47,7 +48,7 @@ class G2xPositionedRelativeToChild {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.08)
+            color: Colors.black.withOpacity(backdropTransparency)
           ),
           child: Stack(
             children: [
@@ -90,10 +91,7 @@ class G2xPositionedRelativeToChild {
       Positioned(
         left: left + offSet.dx,
         top: top + offSet.dy,
-        child: Material(
-          elevation: 4.0,
-          child: child,
-        ),
+        child: child,
       );
 
     return OverlayEntry(

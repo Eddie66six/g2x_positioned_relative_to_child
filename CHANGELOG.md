@@ -1,3 +1,7 @@
+## [0.0.3] - Fix problem with Elevetion inner child
+
+* Fix problem with Elevetion inner child.
+
 ## [0.0.2] - Add backdrop variant
 
 * Create variant to with or withou backdrop.
