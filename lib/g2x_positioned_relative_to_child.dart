@@ -19,8 +19,9 @@ class G2xPositionedRelativeToChild {
   final Function? callbackOnHide;
   final bool? hasBackDropBackground;
   final double backdropTransparency = 0.08;
+  final bool closeOnClickOutside;
 
-  G2xPositionedRelativeToChild({this.callbackOnHide, this.hasBackDropBackground = false});
+  G2xPositionedRelativeToChild({this.callbackOnHide, this.hasBackDropBackground = false, this.closeOnClickOutside = true});
 
   show({
     required BuildContext context, required GlobalKey parentKey, required Widget child,
@@ -42,7 +43,9 @@ class G2xPositionedRelativeToChild {
     return 
       GestureDetector(
         onTap: () {
-          hide();
+          if(closeOnClickOutside) {
+            hide();
+          }
         },
         child: Container(
           width: MediaQuery.of(context).size.width,
