@@ -41,7 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     g2xPositionedRelativeWithBackdrop = G2xPositionedRelativeToChild(
       callbackOnHide: _fechar,
-      hasBackDropBackground: true
+      closeOnTapOutside: true,
+      backdropColor: Colors.black12
     );
     
     super.initState();

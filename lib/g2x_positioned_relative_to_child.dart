@@ -17,11 +17,14 @@ enum G2xVerticalPositionAxis {
 class G2xPositionedRelativeToChild {
   OverlayEntry? _overlayEntry;
   final Function? callbackOnHide;
-  final bool? hasBackDropBackground;
-  final double backdropTransparency = 0.08;
-  final bool closeOnClickOutside;
+  final Color? backdropColor;
+  final bool closeOnTapOutside;
 
-  G2xPositionedRelativeToChild({this.callbackOnHide, this.hasBackDropBackground = false, this.closeOnClickOutside = true});
+  G2xPositionedRelativeToChild({
+    this.callbackOnHide,
+    this.backdropColor,
+    this.closeOnTapOutside = false,
+  });
 
   show({
     required BuildContext context, required GlobalKey parentKey, required Widget child,
@@ -41,24 +44,25 @@ class G2xPositionedRelativeToChild {
 
   _backDrop(BuildContext context, Widget child) {
     return 
-      GestureDetector(
-        onTap: () {
-          if(closeOnClickOutside) {
-            hide();
-          }
-        },
+      SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(backdropTransparency)
-              )
+            GestureDetector(
+              onTap: () {
+                if(closeOnTapOutside) {
+                  hide();
+                }
+              },
+              child: Container(
+                color: closeOnTapOutside && backdropColor == null ?
+                  Colors.transparent : backdropColor
+              ),
             ),
             child
           ],
-        )
+        ),
       );
   }
 
@@ -97,7 +101,7 @@ class G2xPositionedRelativeToChild {
 
     return OverlayEntry(
       builder: (context) {
-        return hasBackDropBackground! ? _backDrop(context, innerChild) : innerChild;
+        return _backDrop(context, innerChild);
       }
     );
   }
