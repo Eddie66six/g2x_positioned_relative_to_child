@@ -1,3 +1,6 @@
+## [0.0.5] - Bug fix and update parameters
+
+* alter backdrop parameters and fixed test bugs
 ## [0.0.4] - Add click outside to close on backdrop
 
 * Add click outside to close on backdrop
