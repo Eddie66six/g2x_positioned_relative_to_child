@@ -47,20 +47,18 @@ class G2xPositionedRelativeToChild {
             hide();
           }
         },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(backdropTransparency)
-          ),
-          child: Stack(
-            children: [
-              SizedBox(),
-
-              child
-            ],
-          )
-        ),
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(backdropTransparency)
+              )
+            ),
+            child
+          ],
+        )
       );
   }
 
