@@ -18,11 +18,13 @@ class G2xPositionedRelativeToChild {
   OverlayEntry? _overlayEntry;
   final Function? callbackOnHide;
   final Color? backdropColor;
+  final Key? backdropKey;
   final bool closeOnTapOutside;
 
   G2xPositionedRelativeToChild({
     this.callbackOnHide,
     this.backdropColor,
+    this.backdropKey,
     this.closeOnTapOutside = false,
   });
 
@@ -45,6 +47,7 @@ class G2xPositionedRelativeToChild {
   _backDrop(BuildContext context, Widget child) {
     return 
       SizedBox(
+        key: backdropKey,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Stack(
