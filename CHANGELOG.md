@@ -1,3 +1,6 @@
+## [0.0.6] - backdrop key
+
+* add parameter backdropKey
 ## [0.0.5] - Bug fix and update parameters
 
 * alter backdrop parameters and fixed test bugs
