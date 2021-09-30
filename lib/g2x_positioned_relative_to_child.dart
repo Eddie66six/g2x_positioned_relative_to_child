@@ -47,7 +47,6 @@ class G2xPositionedRelativeToChild {
   _backDrop(BuildContext context, Widget child) {
     return 
       SizedBox(
-        key: backdropKey,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -59,6 +58,7 @@ class G2xPositionedRelativeToChild {
                 }
               },
               child: Container(
+                key: backdropKey,
                 color: closeOnTapOutside && backdropColor == null ?
                   Colors.transparent : backdropColor
               ),
